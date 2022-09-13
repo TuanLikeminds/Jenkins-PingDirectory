@@ -46,6 +46,7 @@ podTemplate(label: 'mypod', serviceAccount: 'jenkins-ci', containers: [
                 sh 'hostname -i' 
                 sh 'docker ps'
                 sh 'ls'
+                sh 'ls'
             }
             container('kubectl') { 
                 sh 'kubectl get pods -n default'  
