@@ -14,7 +14,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh "echo 'Deploying the helm charts!!!!! yayyyy'"
-                sh "echo 'Deploying the helm charts!!!!! yayyyy'"
+                sh "echo 'Deploying the helm charts!!!!! yayyyyyy'"
             }
         }
     }
