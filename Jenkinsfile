@@ -1,7 +1,7 @@
 pipeline { 
     agent any 
     stages {
-        stage('Build') { 
+        stage('Download Docker image') { 
             steps { 
                 sh "echo 'building..'"
             }
