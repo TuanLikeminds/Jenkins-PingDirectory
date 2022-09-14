@@ -53,6 +53,7 @@ podTemplate(name: 'mypod', serviceAccount: 'jenkins', containers: [
             container('helm') { 
                 sh 'helm init --client-only --skip-refresh'
                 sh 'helm repo update'
+                sh 'helm list'
             }
         }         
     }
