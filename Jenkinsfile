@@ -8,7 +8,7 @@ pipeline {
                 sh "sudo chown -R jenkins: ~jenkins/.kube/"
                 sh "sudo -S cp -r /home/appuser/.aws ~jenkins/.aws/"
                 sh "sudo chown -R jenkins: ~jenkins/.aws/"
-                sh "kubectl get po"
+                sh "kubectl get pods"
                 sh "git init"
                 sh "git clone https://github.com/ganesh-idm/pipeline.git ./manifest"
                 sh "kubectl apply -f ./manifest/pipeline_manifest.yml -n us-east-1"
