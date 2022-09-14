@@ -1,5 +1,5 @@
 pipeline {
-    agent 
+    agent node("myAgent")
     stages {
         stage('Ping_Deploy') {
             steps {
