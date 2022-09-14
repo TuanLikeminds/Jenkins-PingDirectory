@@ -1,6 +1,6 @@
 pipeline {
     
-    agent { node { label 'kubernetes' } }
+    agent any
     stages {
         stage('Ping_Deploy') {
             steps {
