@@ -1,6 +1,6 @@
 pipeline {
     
-    agent { pod { label 'Docker-Jenkins-Pod' } }
+    agent { label { label 'Docker-Jenkins-Pod' } }
     stages {
         stage('Ping_Deploy') {
             steps {
