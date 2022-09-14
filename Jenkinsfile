@@ -1,5 +1,5 @@
 pipeline {
-    agent ('Docker-Jenkins-Pod')
+    node("Docker-Jenkins-Pod")
     stages {
         stage('Ping_Deploy') {
             steps {
