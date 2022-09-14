@@ -1,23 +1,20 @@
-{
-    node('Docker-Jenkins-Pod') {
-        stage('Get latest version of code') {
-          checkout scm
+pipeline {
+    agent ('Docker-Jenkins-Pod')
+    stages {
+        stage('Ping_Deploy') {
+            steps {
+                sh "sudo -S cp /home/appuser/.kube/config ~jenkins/.kube/"
+                sh "sudo chown -R jenkins: ~jenkins/.kube/"
+                sh "sudo -S cp -r /home/appuser/.aws ~jenkins/.aws/"
+                sh "sudo chown -R jenkins: ~jenkins/.aws/"
+                sh "kubectl get po"
+                sh "git init"
+                sh "git clone https://github.com/ganesh-idm/pipeline.git ./manifest"
+                sh "kubectl apply -f ./manifest/pipeline_manifest.yml -n us-east-1"
+                sh "rm -rf manifest"
+                sh "sleep 300"
+                sh "kubectl get po"
+                }
         }
-        stage('Check running containers') {
-            container('docker') {  
-                sh 'hostname'
-                sh 'hostname -i' 
-                sh 'docker ps'
-                sh 'ls'
-            }
-            container('kubectl') { 
-                sh 'kubectl get pods -n default'
-            }
-            container('helm') { 
-                sh 'helm init --client-only --skip-refresh'
-                sh 'helm repo update'
-                sh 'helm list -a'
-            }
-        }         
     }
 }
