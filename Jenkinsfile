@@ -48,12 +48,12 @@ podTemplate(name: 'mypod', serviceAccount: 'jenkins', containers: [
                 sh 'ls'
             }
             container('kubectl') { 
-                sh 'kubectl get pods -n default'  
+                sh 'kubectl get pods -n default'
             }
             container('helm') { 
                 sh 'helm init --client-only --skip-refresh'
                 sh 'helm repo update'
-                sh 'helm list'
+                sh 'helm list -a'
             }
         }         
     }
