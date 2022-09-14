@@ -1,60 +1,18 @@
-podTemplate(name: 'mypod', serviceAccount: 'jenkins', containers: [ 
-    containerTemplate(
-      name: 'docker', 
-      image: 'docker', 
-      command: 'cat', 
-      resourceRequestCpu: '100m',
-      resourceLimitCpu: '300m',
-      resourceRequestMemory: '300Mi',
-      resourceLimitMemory: '500Mi',
-      ttyEnabled: true
-    ),
-    containerTemplate(
-      name: 'kubectl', 
-      image: 'amaceog/kubectl',
-      resourceRequestCpu: '100m',
-      resourceLimitCpu: '300m',
-      resourceRequestMemory: '300Mi',
-      resourceLimitMemory: '500Mi', 
-      ttyEnabled: true, 
-      command: 'cat'
-    ),
-    containerTemplate(
-      name: 'helm', 
-      image: 'alpine/helm:2.14.0', 
-      resourceRequestCpu: '100m',
-      resourceLimitCpu: '300m',
-      resourceRequestMemory: '300Mi',
-      resourceLimitMemory: '500Mi',
-      ttyEnabled: true, 
-      command: 'cat'
-    )
-  ],
-
-  volumes: [
-    hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
-    hostPathVolume(mountPath: '/usr/local/bin/helm', hostPath: '/usr/local/bin/helm')
-  ]
-  ) {
-    node('mypod') {
-        stage('Get latest version of code') {
-          checkout scm
+pipeline {
+    agent any
+    stages {
+        stage('Ping_Deploy') {
+            steps {
+                sh "sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common"
+                sh "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -"
+                sh "sudo apt-key fingerprint 0EBFCD88"
+                sh "sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu  $(lsb_release -cs) stable" "
+                sh "sudo apt-get update"
+                sh "sudo apt-get install -y docker-ce"
+                sh "sudo groupadd docker"
+                sh "sudo usermod -aG docker $USER"
+                sh "sudo systemctl enable docker"
+                }
         }
-        stage('Check running containers') {
-            container('docker') {  
-                sh 'hostname'
-                sh 'hostname -i' 
-                sh 'docker ps'
-                sh 'ls'
-            }
-            container('kubectl') { 
-                sh 'kubectl get pods -n default'
-            }
-            container('helm') { 
-                sh 'helm init --client-only --skip-refresh'
-                sh 'helm repo update'
-                sh 'helm list -a'
-            }
-        }         
     }
 }
