@@ -40,7 +40,7 @@ podTemplate(name: 'mypod', serviceAccount: 'jenkins', containers: [
         stage('Get latest version of code') {
           checkout scm
         }
-        stage('Check running containers') {
+        stage('Check running containers yo') {
             container('docker') {  
                 sh 'hostname'
                 sh 'hostname -i' 
