@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Ping_Deploy') {
             steps {
-                sh "hello from the other side"
+                sh "echo hello from the other side"
                 }
         }
     }
