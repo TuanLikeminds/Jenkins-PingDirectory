@@ -5,7 +5,7 @@ pipeline {
         stage('Ping_Deploy') {
             steps {
                 sh "echo hello from the other side"
-                sh "sudo apt-get update"
+                sh "apt-get update"
                 }
         }
     }
