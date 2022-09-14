@@ -1,5 +1,6 @@
 pipeline {
-    agent node("myAgent")
+    
+    agent { kubernetes { label 'Docker-Jenkins-Pod' } }
     stages {
         stage('Ping_Deploy') {
             steps {
